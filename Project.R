@@ -1,0 +1,47 @@
+library(ggplot2)
+options(scipen = 999)
+bank <- read.csv("C:/Users/True Gamer/OneDrive/Desktop/world_bank_international_arrivals_islands.csv")
+bank[bank == "" | bank == "."] <- NA
+bank$country <- as.numeric(bank$country)
+bank$year <- as.numeric(bank$year)
+bank$areakm2 <- as.numeric(bank$areakm2)
+bank$pop <- as.numeric(bank$pop)
+bank$gdpnom <- as.numeric(bank$gdpnom)
+bank$flights...WB <- as.numeric(bank$flights...WB)
+bank$hotels <- as.numeric(bank$hotels)
+bank$hotrooms <- as.numeric(bank$hotrooms)
+bank$receipt <- as.numeric(bank$receipt)
+bank$ovnarriv <- as.numeric(bank$ovnarriv)
+bank$dayvisit <- as.numeric(bank$dayvisit)
+bank$arram <- as.numeric(bank$arram)
+bank$arreur <- as.numeric(bank$arreur)
+bank$arraus <- as.numeric(bank$arraus)
+for(i in 1:ncol(bank)){
+  bank[is.na(bank[,i]),i] <- mean(bank[,i],na.rm=TRUE)
+}
+write.csv(bank,file="world_bank_islands.csv",row.names = FALSE)
+str(bank)
+
+plot1 <- ggplot(bank, aes(x=year,y=pop)) + geom_line(aes(color=factor(country)),position= "dodge")  + ggtitle("Population of each country yearwise") + xlab("Year") + ylab("Population") + facet_wrap(.~country,scales="free_y",nrow=6)  + scale_x_continuous(breaks=c(0,5,10)) 
+plot2 <- ggplot(bank, aes(x=areakm2,y=pop)) + geom_col(aes(color=factor(country)),position= "dodge")  + ggtitle("Area of Each Country Vs Population") + xlab("Area/Km2") + ylab("Population") + facet_wrap(.~country,scales="free_y",nrow=6)  + scale_x_continuous(breaks=seq(10000,30000,15000)) 
+plot3 <- ggplot(bank, aes(x=year,y=arram)) + geom_line(aes(color=factor(country)),position= "dodge")  + ggtitle("Arrival from America to different countries") + xlab("Year") + ylab("Arrivals from America") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,4))
+plot4 <- ggplot(bank, aes(x=year,y=arraus)) + geom_line(aes(color=factor(country)),position= "dodge")  + ggtitle("Arrival from Australia to different countries") + xlab("Year") + ylab("Arrivals from Australia") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,4))
+plot5 <- ggplot(bank, aes(x=year,y=arreur)) + geom_line(aes(color=factor(country)),position= "dodge")  + ggtitle("Arrival from Europe to different countries") + xlab("Year") + ylab("Arrivals from Europe") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,4))
+plot6 <- ggplot(bank, aes(x=year,y=gdpnom)) + geom_line(aes(color=factor(country)),position= "dodge")  + ggtitle("GDP of the Countries over the years") + xlab("Year") + ylab("GDP") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,4))
+plot7 <- ggplot(bank, aes(x=year,y=hotrooms)) + geom_line(aes(color=factor(country)),position= "dodge")  + ggtitle("Number of Hotel rooms in the Country each year") + xlab("year") + ylab("Number of Hotel Rooms") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,4))
+plot8 <- ggplot(bank, aes(x=year,y=dayvisit)) + geom_line(aes(color=factor(country)),position= "dodge",show.legend="FALSE")  + ggtitle("Number of Visit Days each year for all the countries") + xlab("year") + ylab("Number of Days of Visit") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,4))
+plot9 <- ggplot(bank, aes(x=year,y=receipt)) + geom_line(aes(color=factor(country)),position= "dodge",show.legend = "FALSE")  + ggtitle("Tourism Receipts") + xlab("year") + ylab("Receipts") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,4))
+
+PIC <- subset(bank, country == 27 | country==22 | country==16 | country==11 | country == 14 | country == 23 | country == 24)
+PIC
+
+plot10 <- ggplot(PIC, aes(x=year,y=ovnarriv)) + geom_col(aes(color=factor(country)),position= "dodge")  + ggtitle("Overnight Arrivals in the PIC over the years") + xlab("Year") + ylab("Overnight arrivals") + facet_wrap(.~country,scales="free_y",nrow=6)  + scale_x_continuous(breaks=seq(0,12,2)) 
+plot11 <- ggplot(PIC,aes(x=year,y=arram)) + geom_line(aes(color=factor(country)),position= "dodge")  + ggtitle("Number of Arrivals to the PIC from America") + xlab("Year") + ylab("Arrivals from America") + facet_wrap(.~country,scales="free_y",nrow=6)  + scale_x_continuous(breaks=seq(0,12,2)) 
+plot12 <- ggplot(PIC, aes(x=year,y=arraus)) + geom_line(aes(color=factor(country)),position= "dodge")  + ggtitle("Arrival from Australia to PIC") + xlab("Year") + ylab("Arrivals from Australia") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,2))
+plot13 <- ggplot(PIC, aes(x=year,y=arreur)) + geom_line(aes(color=factor(country)),position= "dodge")  + ggtitle("Arrival from Europe to PIC") + xlab("Year") + ylab("Arrivals from Europe") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,2))
+plot14 <- ggplot(PIC, aes(x=year,y=receipt)) + geom_line(aes(color=factor(country)),position= "dodge")  + ggtitle("Tourism Receipts for the PIC") + xlab("Year") + ylab("Tourism Receipts") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,2))
+plot15 <- ggplot(PIC, aes(x=year,y=gdpnom)) + geom_col(aes(fill=factor(country)),position= "dodge")  + ggtitle("Affect on GDP because of Tourism") + xlab("Year") + ylab("GDP") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,2))
+plot16 <- ggplot(PIC, aes(x=year,y=hotels)) + geom_col(aes(fill=factor(country)),position= "dodge",width=0.5)  + ggtitle("Accomodation in PIC") + xlab("Year") + ylab("Number of hotels") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,2))
+
+plot17 <- ggplot(PIC, aes(x=year,y=hotrooms)) + geom_col(aes(fill=factor(country)),position= "dodge",width=0.5)  + ggtitle("Number of Hotel Rooms") + xlab("Year") + ylab("Number of Hotel Rooms") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,2))
+plot18 <- ggplot(bank,aes(x=year,y=flights...WB)) + geom_line(aes(color=factor(country)),position="dodge",width=0.5,show.legend = FALSE) + ggtitle("Connectivity of the countries") + xlab("Year") + ylab("Number of Flights") + facet_wrap(.~country,scales="free_y",nrow=6) + scale_x_continuous(breaks=seq(0,12,2))

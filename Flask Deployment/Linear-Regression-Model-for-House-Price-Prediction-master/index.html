@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Oct 29 16:43:47 2022
+
+@author: True Gamer
+"""
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ML API</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine" type='text/css'>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arimo" type='text/css'>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Hind:300" type='text/css'>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" type='text/css'>
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+
+</head>
+
+<body>
+ <div class="login">
+    <h1>Predict House Price</h1>
+        
+    <form action="{{url_for('predict')}}"method="post">
+        <input type="text" name="income" placeholder="Income" required="required" />
+        <input type="text" name="house_age" placeholder="House Age" required="required" />
+        <input type="text" name="no_of_rooms" placeholder="Number of Rooms" required="required" />
+        <input type="text" name="no_of_bedrooms" placeholder="Number of Bedrooms" required="required" />
+        <input type="text" name="area_population" placeholder="Area Population" required="required" />
+        
+        <button type="submit" class="btn btn-primary btn-block btn-Large">Predict</button>
+            
+    </form>
+        
+   <br>
+   <br>
+   {{prediction_text}}
+   
+ </div>
+    
+    
+        
+
+
+    
+    
+    
+    
+    
+    
